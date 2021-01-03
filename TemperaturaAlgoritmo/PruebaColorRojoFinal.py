@@ -2,7 +2,7 @@
 import cv2
 import numpy as np
 
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture('VideoImagenesTermicas.mp4')
 
 #Limites  y rango del color rojo Prueba 2
 LimiteinferiorRojo1 = np.array([0, 100, 20], np.uint8)
@@ -53,7 +53,8 @@ while True: # se inicia la camara  permiendo leer la imagen a cada momento
     #dIBUJAR LOS CONTRONOS ENCONTRADOS\
     
     
-    if cv2.waitKey(1) & 0xFF == ord('s'):
+    if cv2.waitKey(40) & 0xFF == ord('s'):
       break
+  else: break
 cap.release()
 cv2.destroyAllWindows()
