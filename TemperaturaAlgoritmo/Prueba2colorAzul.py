@@ -23,10 +23,22 @@ while True: # se inicia la camara  permiendo leer la imagen a cada momento
     #seleccion de contornos 
     for c in contornos:
         area=cv2.contourArea(c)
-        if area > 3000:
-            # suavizado de lineas
-            newContourn=cv2.convexHull(c)
-            cv2.drawContours(frame, [newContourn],0, (0,255,0), 3) # para dibujar solo ciertos contornos 
+        if area > 3000: 
+          #Buscar el area central del objeto especificado para  mostrarla
+          M = cv2.moments(c)
+          if (M["m00"]==0): M["m00"]=1
+          #valores de x,y 
+          x = int(M["m10"]/M["m00"])
+          y = int(M['m01']/M['m00'])
+          # se dibuja el circulo
+          cv2.circle(frame, (x,y), 7, (0,255,0), -1)
+          #fuente del texto 
+          font = cv2.FONT_HERSHEY_SIMPLEX
+          #colancandolo en la imagen
+          cv2.putText(frame, '{},{}'.format(x,y),(x+10,y), font, 0.75,(0,255,0),1,cv2.LINE_AA)
+          # suavizado de lineas
+          newContourn=cv2.convexHull(c)
+          cv2.drawContours(frame, [newContourn],0, (0,255,0), 3) # para dibujar solo ciertos contornos 
             
     cv2.imshow('frame', frame)
    # cv2.imshow('maskRed', maskazul)
