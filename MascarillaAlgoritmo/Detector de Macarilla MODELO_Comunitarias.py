@@ -3,12 +3,12 @@
 
 # In[16]:
 
-
+'''
 get_ipython().system('pip  install opencv-python')
 get_ipython().system('pip install matplotlib')
 get_ipython().system('pip install tensorflow==2.2.1')
 get_ipython().system('pip install pillow')
-
+'''
 
 # In[22]:
 
@@ -19,11 +19,11 @@ import numpy as np
 import cv2
 import matplotlib.pyplot as plt
 
-
+print(tf.__version__)
 # In[19]:
 
 
-direc_entrenamiento=r'\Users\jadri\OneDrive\Escritorio\observations-master\experiements\data'
+direc_entrenamiento='/home/kevjlope/Desktop/KevinLopez/Detector-de-Mascarilla-y-Temperatura--Covid2020/observations-master/experiements/data/'
 direc_entre_mask=os.path.join(direc_entrenamiento,"with_mask")
 direc_entre_No_mask=os.path.join(direc_entrenamiento,"without_mask")
 
@@ -134,7 +134,7 @@ plt.show()
 
 # In[39]:
 
-
+import matplotlib.pyplot as plt
 from tensorflow.keras.preprocessing import image
 from PIL import Image
 
@@ -142,7 +142,7 @@ from PIL import Image
 # In[49]:
 
 
-vc = cv2.VideoCapture(0) 
+vc = cv2.VideoCapture(1) 
 plt.ion()
 if vc.isOpened(): 
     is_capturing, frame = vc.read()
@@ -174,13 +174,12 @@ while is_capturing:
 
 
 # In[ ]:
-
-
-
-
+#Convertir modelo a TFLite para transferirlo a la raspberry Pi 4
+converter = tf.lite.TFLiteConverter.from_keras_model(model)
+tflite_model = converter.convert()
 
 # In[ ]:
-
+open("mask_classifier.tflite","wb").write(tflite_model)
 
 
 
